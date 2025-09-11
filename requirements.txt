@@ -2,6 +2,8 @@ langchain
 langchain-community
 pypdf
 python-dotenv
+faiss
+faiss-cpu
 ipykernel
 langchain_groq
 langchain_openai
