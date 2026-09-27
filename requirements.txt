@@ -6,5 +6,7 @@ ipykernel
 langchain_groq
 langchain_openai
 langchain_google_genai
+langchain-huggingface
+sentence-transformers
 
 -e .
