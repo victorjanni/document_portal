@@ -10,5 +10,7 @@ langchain-huggingface
 sentence-transformers
 langchain-text-splitters
 faiss-cpu
+structlog
+PyMuPDF
 
 -e .
