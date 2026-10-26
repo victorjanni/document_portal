@@ -15,3 +15,30 @@ class CustomLogger:
     
     def get_logger(self, name=__file__):
         logger_name = os.path.basename(name)
+
+        file_handler = logging.FileHandler(self.log_file_path)
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(logging.Formatter("%(message)s"))
+
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(logging.Formatter("%(message)s"))
+
+        logging.basicConfig(
+            level = logging.INFO,
+            format = "%(message)s", # JSON rendering will handle by structlog
+            handlers = [console_handler, file_handler]
+        )
+
+        structlog.configure(
+            processors=[
+                structlog.processors.Timestamper(fmt="iso", utc=True, key="timestamp"),
+                structlog.processors.add_log_level,
+                structlog.processors.EventRenamer(to="event"),
+                structlog.processors.JSONRenderer()
+            ],
+            logger_factory=structlog.stdlib.LoggerFactory(),
+            cache_logger_on_frist_use=True
+        )
+
+        return structlog.get_logger(logger_name)
